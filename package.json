@@ -1,0 +1,19 @@
+{
+  "name": "ZeusPi Dashboard",
+  "version": "1.0.0",
+  "description": "Zeusminer RaspberryPi Dashboard",
+  "main": "daemon.js",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "child-process-promise": "^2.0.2",
+    "express": "^4.13.4",
+    "express-json": "^1.0.0",
+    "respawn": "^2.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "euhex",
+  "license": "ISC"
+}

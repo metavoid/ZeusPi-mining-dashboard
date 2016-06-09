@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>ZeusPi Mining Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="normalize.css">
+     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body>
+    <nav id="menu" class="panel" role="navigation">
+        <ul>
+            <a href="#stats"><li>Mining stats</li></a>
+            <a href="#pool-list"><li>Pool list</li></a>
+            <a href="#settings"><li>Settings</li></a>
+            <a href="#"><li class="restart-miner-ctrl">Restart miner</li></a>
+            <a href="#"><li class="reboot-ctrl">Reboot RPi</li></a>
+            <a href="#"><li class="drop-settings-ctrl">Reset to defaults</li></a>
+        </ul>
+    </nav>
+    <header>
+        <a href="#menu" class="menu-link">
+            <button class="hamburger hamburger--slider" type="button">
+                <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </a>
+        <p class="title">ZeusPi Mining Dashboard</p>
+    </header>
+    <main class="push">
+        <div class="label stats-label center-align" id="stats">- Mining stats -</div>
+        <div class="stats">
+            <div class="stats-panel hashrate">
+                <div class="stats-panel-label">Hashrate</div>
+                <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span>&nbsp;MH/s</div>
+            </div>
+            <div class="stats-panel accepted">
+                <div class="stats-panel-label">Accepted</div>
+                <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
+            </div>
+            <div class="stats-panel rejected">
+                <div class="stats-panel-label">Rejected</div>
+                <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
+            </div>
+            <div class="stats-panel errors">
+                <div class="stats-panel-label">Errors</div>
+                <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
+            </div>
+            <div class="stats-panel temperature">
+                <div class="stats-panel-label">Temperature</div>
+                <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span>&nbsp;&#176;C</div>
+            </div>
+        </div>
+        <div class="button-panel controls">
+            <div class="button-material start-miner-btn">Start miner</div>
+            <div class="button-material stop-miner-btn">Stop miner</div>
+            <div class="button-material restart-miner-btn restart-miner-ctrl">Restart miner</div>
+        </div>
+        <div class="label center-align" id="pool-list">- Pool list -</div>
+        <div class="pools center-align">
+            <ul class="pool-list">
+                
+            </ul>
+            <div class="button-panel">
+                <div class="add-new-pool button-material">Add pool</div>
+                <div class="refresh-ping button-material">Refresh ping</div>
+                <div class="remove-all-pools button-material">Remove all</div>
+            </div>
+        </div>
+        <div class="label center-align" id="settings">- Hardware settings -</div>
+        <div class="settings center-align">
+            <form>
+                <span>Miner model:</span>
+                <select class="settings__select">
+                    <option data-chips="6">Blizzard</option>
+                    <option data-chips="96">Cyclone</option>
+                    <option data-chips="48">Hurricane X2</option>
+                    <option data-chips="64">Hurricane X3</option>
+                    <option data-chips="96">Thunder X2</option>
+                    <option data-chips="128">Thunder X3</option>
+                </select>
+                <br>
+                <span>Число чипов:</span>
+                <input class="settings__chips" type="text" name="zeus-chips">
+                <br>
+                <span>Рабочая частота:</span>
+                <input class="settings__clock" type="text" name="zeus-clock" value="328">
+                <br>
+                <div class="button-panel">
+                    <div class="button-material save-conf-btn">Save and restart</div>
+                </div>
+            </form>
+        </div>
+        <footer class="center-align">ZeusPi mining dashboard by <a href="http://github.com/euhex">&nbsp;@Euhex</a>
+        </footer>
+    </main>
+
+    <div id="edit-modal" class="settings" style="display:none;">
+         <form>
+                <span>Pool URL:</span>
+                <input class="edit-modal__url" type="text" name="url">
+                <br>
+                <span>Username:</span>
+                <input class="edit-modal__login" type="text" name="login">
+                <br>
+                <span>Password:</span>
+                <input class="edit-modal__password" type="text" name="password">
+                <br>
+                <div class="button-panel">
+                    <div class="button-material edit-modal__save">Save</div>
+                    <div class="button-material edit-modal__cancel">Cancel</div>
+                    <div class="button-material edit-modal__delete">Remove</div>
+                </div>
+            </form>
+    </div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bigSlide.min.js"></script>
+    <script src="lib/jquery.modal.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
