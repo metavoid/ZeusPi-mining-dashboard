@@ -1,5 +1,5 @@
 # ZeusPi-mining-dashboard
-Mining dashboard for RaspberryPi with bfgminer fork</a> for scrypt ZeusMiners.
+Mining dashboard for RaspberryPi with bfgminer fork for scrypt ZeusMiners.
 
 <h2>How to use it?</h2>
 
@@ -9,4 +9,4 @@ Then, copy this repository to <code>/home/pi/zeusPi/</code> directory of your Ra
 
 Test, look around, if everything works fine, you may wish ZeusPi daemon to start automatically on reboot. Use <code>crontab -e</code> command to edit cron tasks and add there <code>@reboot</code> command with path to node and daemon.js. Or you can edit <code>/etc/rc.local</code> file and add autorun command there. In any case, node should be started with superuser privileges, otherwise it would fail to work. 
 
-In this dashboard you can find such useful functions as pool list editor, miner restart panel, mining stats, hardware settings and some other helpers. This is alpha version, you're welcome to experiment, modify, fork, send issues and pull requests.
+In this dashboard you can find such useful functions as pool list editor, miner restart panel, mining stats, hardware settings and some other helpers. This is pre-alpha version, you're welcome to experiment, modify, fork, send issues and pull requests.
