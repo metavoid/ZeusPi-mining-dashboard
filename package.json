@@ -1,5 +1,5 @@
 {
-  "name": "ZeusPi Dashboard",
+  "name": "ZeusPiDashboard",
   "version": "1.0.0",
   "description": "Zeusminer RaspberryPi Dashboard",
   "main": "daemon.js",
@@ -10,10 +10,10 @@
     "express-json": "^1.0.0",
     "respawn": "^2.4.1"
   },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "winston": "^2.2.0"
   },
+  "scripts": {},
   "author": "euhex",
   "license": "ISC"
 }

@@ -4,4 +4,4 @@ echo $*
 
 sudo /home/pi/bfgminer/bfgminer $*
 
-echo $*
+echo $*  

@@ -7,6 +7,15 @@ var execSync = require('child_process').execSync;
 var ping = require("net-ping");
 var dns = require('dns');
 var urlParser = require('url');
+var winston = require('winston');
+
+//Init logger
+
+winston.add(winston.transports.File, {
+    filename: '/home/pi/log.txt'
+});
+winston.remove(winston.transports.Console);
+
 
 
 //Init local variables
@@ -25,23 +34,42 @@ var bfgminer = {};
 function minerSetup(miner, config) {
     if (miner.stop) miner.stop();
 
-    console.log(config.activePool);
+    console.log(config.activePool+1, pools, pools.length);
 
-    if (pools.length && config.activePool != -1) {
-        var pool = pools[config.activePool].pool;
-        var pass = pools[config.activePool].pass;
-        var login = pools[config.activePool].login;
+
+
+    if (pools && pools.length && config.activePool != -1) {
+        var poolId = parseInt(config.activePool);
+        var pool = pools[poolId].pool;
+        var pass = pools[poolId].pass;
+        var login = pools[poolId].login;
+
+       var failover1 = '';
+        var failover2 = '';
+ 
+        if (poolId > 0 && poolId < pools.length - 1) {
+            failover1 = ' -o ' + pools[poolId - 1].pool + ' -u ' + pools[poolId - 1].login + ' -p ' + pools[poolId - 1].pass;
+            failover2 = ' -o ' + pools[poolId + 1].pool + ' -u ' + pools[poolId + 1].login + ' -p ' + pools[poolId + 1].pass;
+        } else if (poolId == pools.length - 1 && pools.length > 2) {
+            failover1 = ' -o ' + pools[poolId - 1].pool + ' -u ' + pools[poolId - 1].login + ' -p ' + pools[poolId - 1].pass;
+            failover2 = ' -o ' + pools[poolId - 2].pool + ' -u ' + pools[poolId - 2].login + ' -p ' + pools[poolId - 2].pass;
+
+        } else if (poolId == 0 && pools.length > 2) {
+            failover1 = ' -o ' + pools[poolId + 1].pool + ' -u ' + pools[poolId + 1].login + ' -p ' + pools[poolId + 1].pass;
+            failover2 = ' -o ' + pools[poolId + 2].pool + ' -u ' + pools[poolId + 2].login + ' -p ' + pools[poolId + 2].pass;
+
+        } 
     }
-    console.log(pool, login, pass);
+    console.log(pool, login, pass, failover1, failover2);
 
-    miner = respawn(['/home/pi/zeusPi/bfg_start.sh', '--scrypt', '-o', pool, '-u', login, '-p', pass, '--zeus-cc', config.chips, '--zeus-clk', config.clock, '-S zeus:all'], {
+    miner = respawn(['/home/pi/zeusPi/bfg_start.sh', '--scrypt', '-o', pool, '-u', login, '-p', pass, failover1, failover2,'--zeus-cc', config.chips, '--zeus-clk', config.clock, '-S zeus:all', '--verbose'], {
         cwd: '.', // set cwd
         maxRestarts: 20, // how many restarts are allowed within 60s
         // or -1 for infinite restarts
         sleep: 200, // time to sleep between restarts,
         kill: 3000,
         uid: 0
-      
+
     });
 
     miner.on('stdout', data => parseOutput(data));
@@ -196,7 +224,7 @@ function startMiner(miner) {
 }
 
 function stopMiner(miner) {
-    
+
     miner.stop();
 
 }
@@ -257,19 +285,32 @@ function getSysTemp() {
 function parseOutput(data) {
     data += '';
     console.log(data);
+    // winston.log('info', data);
+    /* if (~data.indexOf('] New block: ...')) {
+        stats.blocks++;
+        console.log('\n \n Blocks found: ' + stats.blocks + '\n\n')
+    } */
 
-    if(data.search(/avg:/i) != -1 && data.search(/20s:/i) != -1) {
+    if (~data.indexOf('failure, disabling!')) {
+        restartMiner(bfgminer);
+        setTimeout(function(restartMiner, bfg) {
+            restartMiner(bfg);
+        }, 5000, restartMiner, bfgminer);
+    }
+
+    if (data.search(/avg:/i) != -1 && data.search(/20s:/i) != -1) {
+        //console.log(data);
         var output = data.split('|');
-        
 
-        var hashrateOut = output[0].substr(output[0].indexOf('20s:')+4, 5);
 
-       
+        var hashrateOut = output[0].substr(output[0].indexOf('20s:') + 4, 5);
+
+
 
         var acceptedOut = output[1].slice(output[1].indexOf('A:') + 2, output[1].indexOf('R:') - 1);
         var rejectedOut = output[1].slice(output[1].indexOf('R:') + 2, output[1].indexOf('+'));
         var hwOut = output[1].slice(output[1].indexOf('HW:') + 3, output[1].indexOf('/'));
-        
+
         console.log('hashrate: ' + hashrateOut);
         console.log('accepted: ' + acceptedOut);
         console.log('rejected: ' + rejectedOut);
@@ -286,8 +327,8 @@ function updateStats(hash, acc, rej, hw) {
     acc = parseInt(acc);
     rej = parseInt(rej);
     hw = parseInt(hw);
-  
-    if(typeof hash == 'number' && typeof acc == 'number' && typeof rej == 'number' && typeof hw == 'number') {
+
+    if (typeof hash == 'number' && typeof acc == 'number' && typeof rej == 'number' && typeof hw == 'number') {
         console.log('Stats valid');
         stats.accepted = acc;
         stats.hashrate = hash;
@@ -303,7 +344,8 @@ function dropStats() {
         hashrate: 0,
         accepted: 0,
         rejected: 0,
-        hw: 0
+        hw: 0,
+        blocks: 0
 
     }
 }
