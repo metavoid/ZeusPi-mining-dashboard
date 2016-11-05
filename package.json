@@ -8,6 +8,7 @@
     "child-process-promise": "^2.0.2",
     "express": "^4.13.4",
     "express-json": "^1.0.0",
+    "net-ping": "^1.2.0",
     "respawn": "^2.4.1"
   },
   "devDependencies": {

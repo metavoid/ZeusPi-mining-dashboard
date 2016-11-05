@@ -34,7 +34,7 @@ var bfgminer = {};
 function minerSetup(miner, config) {
     if (miner.stop) miner.stop();
 
-    console.log(config.activePool+1, pools, pools.length);
+   // console.log(config.activePool+1, pools, pools.length);
 
 
 
@@ -44,25 +44,27 @@ function minerSetup(miner, config) {
         var pass = pools[poolId].pass;
         var login = pools[poolId].login;
 
-       var failover1 = '';
-        var failover2 = '';
- 
-        if (poolId > 0 && poolId < pools.length - 1) {
-            failover1 = ' -o ' + pools[poolId - 1].pool + ' -u ' + pools[poolId - 1].login + ' -p ' + pools[poolId - 1].pass;
-            failover2 = ' -o ' + pools[poolId + 1].pool + ' -u ' + pools[poolId + 1].login + ' -p ' + pools[poolId + 1].pass;
-        } else if (poolId == pools.length - 1 && pools.length > 2) {
-            failover1 = ' -o ' + pools[poolId - 1].pool + ' -u ' + pools[poolId - 1].login + ' -p ' + pools[poolId - 1].pass;
-            failover2 = ' -o ' + pools[poolId - 2].pool + ' -u ' + pools[poolId - 2].login + ' -p ' + pools[poolId - 2].pass;
-
-        } else if (poolId == 0 && pools.length > 2) {
-            failover1 = ' -o ' + pools[poolId + 1].pool + ' -u ' + pools[poolId + 1].login + ' -p ' + pools[poolId + 1].pass;
-            failover2 = ' -o ' + pools[poolId + 2].pool + ' -u ' + pools[poolId + 2].login + ' -p ' + pools[poolId + 2].pass;
-
-        } 
+    
+    } else {
+        return;
     }
-    console.log(pool, login, pass, failover1, failover2);
 
-    miner = respawn(['/home/pi/zeusPi/bfg_start.sh', '--scrypt', '-o', pool, '-u', login, '-p', pass, failover1, failover2,'--zeus-cc', config.chips, '--zeus-clk', config.clock, '-S zeus:all', '--verbose'], {
+    console.log(pool, login, pass); 
+    var minerArgs = [];
+
+    if(config.algo == "scrypt") {
+
+        minerArgs = ['/home/pi/zeusPi/bfg_start.sh', '--scrypt', '-o', pool, '-u', login, '-p', pass, '--zeus-cc', config.chips, '--zeus-clk', config.clock, '-S zeus:all', '--verbose'];
+
+    } else if (config.algo == "sha") {
+
+        minerArgs = ['/home/pi/zeusPi/bfg_start.sh', '-o', pool, '-u', login, '-p', pass, '--verbose'];
+
+
+    }
+
+
+    miner = respawn(minerArgs, {
         cwd: '.', // set cwd
         maxRestarts: 20, // how many restarts are allowed within 60s
         // or -1 for infinite restarts
@@ -177,11 +179,13 @@ app.get('/api/setConf/*', function(req, res) {
 
     var chips = query.chips;
     var clock = query.clock;
+    var algo = query.algo;
 
 
 
     config.chips = chips;
     config.clock = clock;
+    config.algo = algo;
 
     resetMiner();
     saveConfig();
@@ -257,7 +261,8 @@ function toDefaults() {
 
         "activePool": -1,
         "chips": 128,
-        "clock": 328
+        "clock": 328,
+        "algo": "scrypt"
 
     }
 
@@ -285,6 +290,7 @@ function getSysTemp() {
 function parseOutput(data) {
     data += '';
     console.log(data);
+    //
     // winston.log('info', data);
     /* if (~data.indexOf('] New block: ...')) {
         stats.blocks++;
@@ -320,6 +326,8 @@ function parseOutput(data) {
 
     }
 }
+
+//Updating stats and validating
 
 function updateStats(hash, acc, rej, hw) {
 
