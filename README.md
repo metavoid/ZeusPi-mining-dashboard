@@ -13,4 +13,4 @@ In this dashboard you can find such useful functions as pool list editor, miner 
 
 Screenshot:
 
-![screenshot](https://raw.githubusercontent.com/metavoid/ZeusPi-mining-dashboard/master/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/metavoid/ZeusPi-mining-dashboard/master/screen.png)
