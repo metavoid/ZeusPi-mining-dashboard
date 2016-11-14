@@ -10,3 +10,7 @@ Then, copy this repository to <code>/home/pi/zeusPi/</code> directory of your Ra
 Test, look around, if everything works fine, you may wish ZeusPi daemon to start automatically on reboot. Use <code>crontab -e</code> command to edit cron tasks and add there <code>@reboot</code> command with path to start.sh. Or you can edit <code>/etc/rc.local</code> file and add autorun command there. In any case, run srcipt with superuser privileges, otherwise it would fail to work. 
 
 In this dashboard you can find such useful functions as pool list editor, miner restart panel, mining stats, hardware settings and some other helpers. This is pre-alpha version, you're welcome to experiment, modify, fork, send issues and pull requests. Also, it supports sha256-miners with usb-control (ex. butterfly labs, bitfury, etc.).
+
+Screenshot:
+
+[[https://github.com/metavoid/ZeusPi-mining-dashboard/blob/master/screenshot.png|alt=screensot]]
