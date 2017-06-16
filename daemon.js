@@ -290,7 +290,6 @@ function getSysTemp() {
 function parseOutput(data) {
     data += '';
     console.log(data);
-    //
     // winston.log('info', data);
     /* if (~data.indexOf('] New block: ...')) {
         stats.blocks++;
@@ -326,8 +325,6 @@ function parseOutput(data) {
 
     }
 }
-
-//Updating stats and validating
 
 function updateStats(hash, acc, rej, hw) {
 

@@ -324,18 +324,22 @@
     
     .pool-list li span:nth-child(2) {
         width: 33%;
+        overflow: hidden;
     }
     
     .pool-list li span:nth-child(3) {
         width: 10%;
+        overflow: hidden;
     }
     
     .pool-list li span:nth-child(4) {
         width: 10%;
+        overflow: hidden;
     }
     
     .pool-list li span:nth-child(5) {
         width: 10%;
+
     }
     
     .pool-list li span:nth-child(6) {
@@ -425,6 +429,11 @@
     
     .settings form .button-panel {
         margin-top: 20px;
+    }
+
+    .settings select[disabled], .settings input[disabled] {
+        background: #B2B2B4;
+        color: #545454;
     }
     /* footer */
     

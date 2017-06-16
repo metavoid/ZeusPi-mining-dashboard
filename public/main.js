@@ -133,7 +133,7 @@
 
     PoolList.init('.pool-list');
 
-    //Buttons events 
+    //INTERFACE EVENT BINDINGS ------------->>>
 
     $$$('.add-new-pool').addEventListener("click", addPoolHandler);
 
@@ -183,12 +183,18 @@
         if (confirm('Restart miner with new settings?')) {
             var chips = document.querySelector('.settings__chips').value;
             var clk = document.querySelector('.settings__clock').value;
+            var algo = document.querySelector('.settings__algo').selectedOptions[0].getAttribute('data-algo');
         }
-        changeConf(chips, clk);
+        changeConf(chips, clk, algo);
+    });
+
+    $('.settings__algo').on('change', function() {
+        var algo = this.selectedOptions[0].getAttribute('data-algo');
+        changeAlgo(algo);
     });
 
 
-    //
+    // <<<-----------------------//
 
 
     getPools();
@@ -335,6 +341,16 @@
 
     }
 
+    function changeAlgo(algo) {
+        if (algo == "scrypt") {
+            $$$('.stats-panel-hash-meter').innerHTML = "Mh/s";
+            $('.settings--scrypt').prop( "disabled", false );
+        } else if (algo == 'sha') {
+            $$$('.stats-panel-hash-meter').innerHTML = "Gh/s";
+            $('.settings--scrypt').prop( "disabled", true );
+        }
+    }
+
     //Modal methods
 
     function clearEditModal() {
@@ -378,6 +394,12 @@
     function applyConf(conf) {
         document.querySelector('.settings__chips').value = conf.chips;
         document.querySelector('.settings__clock').value = conf.clock;
+        changeAlgo(conf.algo);
+        if(conf.algo == "scrypt") {
+            document.querySelector('.settings__algo').selectedIndex = 0;
+        } else if (conf.algo == "sha") {
+            document.querySelector('.settings__algo').selectedIndex = 1;
+        }
 
         if (conf.activePool != -1 && !!PoolList.list.length) {
         	console.log(conf.activePool);
@@ -434,8 +456,8 @@
         }, 'GET');
     }
 
-    function changeConf(chips, clock) {
-        tinyxhr('/api/setConf/?chips=' + chips + '&clock=' + clock, function(err, data) {
+    function changeConf(chips, clock, algo) {
+        tinyxhr('/api/setConf/?chips=' + chips + '&clock=' + clock + '&algo=' + algo, function(err, data) {
             console.log(err);
         }, 'GET');
     }

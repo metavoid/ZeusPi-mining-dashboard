@@ -1,1 +1,1 @@
-{"pools":[{"login":"1011059.3","pass":"x","pool":"stratum+tcp://stratum.antpool.com:3333"},{"login":"DExuGZ3w9E8BvJ4ucENW99XMWc4huL6JKJ","pass":"c=xvg","pool":"stratum+tcp://sha256.mine.zpool.ca:3333"},{"login":"1JFKNRNPoCcucztfSynvYzLpRqPQFUFqj5","pass":"x","pool":"stratum+tcp://sha256.eu.nicehash.com:3334"}]}
+{"pools":[{"login":"1011059.25336","pass":"x","pool":"stratum+tcp://eu-01.miningrigrentals.com:3333"},{"login":"G1011059.2","pass":"1","pool":"stratum+tcp://litecoinpool.org:3333"},{"login":"1011059","pass":"x","pool":"stratum+tcp://prohashing.com:3333"}]}

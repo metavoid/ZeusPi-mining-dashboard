@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width">
-    <title>Zeusminer dashboard</title>
+    <title>ZeusPi Mining Dashboard</title>
     <link rel="stylesheet" type="text/css" href="normalize.css">
      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,500&subset=latin,cyrillic-ext,cyrillic' rel='stylesheet' type='text/css'>
@@ -13,12 +13,12 @@
 <body>
     <nav id="menu" class="panel" role="navigation">
         <ul>
-            <a href="#stats"><li>Статистика</li></a>
-            <a href="#pool-list"><li>Список пулов</li></a>
-            <a href="#settings"><li>Настройки</li></a>
-            <a href="#"><li class="restart-miner-ctrl">Перезапуск майнера</li></a>
-            <a href="#"><li class="reboot-ctrl">Перезагрузка системы</li></a>
-            <a href="#"><li class="drop-settings-ctrl">Сброс настроек</li></a>
+            <a href="#stats"><li>Mining stats</li></a>
+            <a href="#pool-list"><li>Pool list</li></a>
+            <a href="#settings"><li>Settings</li></a>
+            <a href="#"><li class="restart-miner-ctrl">Restart miner</li></a>
+            <a href="#"><li class="reboot-ctrl">Reboot RPi</li></a>
+            <a href="#"><li class="drop-settings-ctrl">Reset to defaults</li></a>
         </ul>
     </nav>
     <header>
@@ -29,58 +29,58 @@
                 </span>
             </button>
         </a>
-        <p class="title">Zeusminer Dashboard</p>
+        <p class="title">ZeusPi Mining Dashboard</p>
     </header>
     <main class="push">
-        <div class="label stats-label center-align" id="stats">- Статистика майнинга -</div>
+        <div class="label stats-label center-align" id="stats">- Mining stats -</div>
         <div class="stats">
             <div class="stats-panel hashrate">
-                <div class="stats-panel-label">Общий хэшрейт</div>
+                <div class="stats-panel-label">Hashrate</div>
                 <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span>&nbsp;<span class="stats-panel-hash-meter"></span></div>
             </div>
             <div class="stats-panel accepted">
-                <div class="stats-panel-label">Принято</div>
+                <div class="stats-panel-label">Accepted</div>
                 <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
             </div>
             <div class="stats-panel rejected">
-                <div class="stats-panel-label">Отказы</div>
+                <div class="stats-panel-label">Rejected</div>
                 <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
             </div>
             <div class="stats-panel errors">
-                <div class="stats-panel-label">Ошибки</div>
+                <div class="stats-panel-label">Errors</div>
                 <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span></div>
             </div>
             <div class="stats-panel temperature">
-                <div class="stats-panel-label">Температура</div>
+                <div class="stats-panel-label">Temperature</div>
                 <div class="stats-panel-container center-align"><span class="stats-panel-data">0</span>&nbsp;&#176;C</div>
             </div>
         </div>
         <div class="button-panel controls">
-            <div class="button-material start-miner-btn">Запустить майнер</div>
-            <div class="button-material stop-miner-btn">Остановить майнер</div>
-            <div class="button-material restart-miner-btn restart-miner-ctrl">Перезапустить майнер</div>
+            <div class="button-material start-miner-btn">Start miner</div>
+            <div class="button-material stop-miner-btn">Stop miner</div>
+            <div class="button-material restart-miner-btn restart-miner-ctrl">Restart miner</div>
         </div>
-        <div class="label center-align" id="pool-list">- Список пулов -</div>
+        <div class="label center-align" id="pool-list">- Pool list -</div>
         <div class="pools center-align">
             <ul class="pool-list">
                 
             </ul>
             <div class="button-panel">
-                <div class="add-new-pool button-material">Добавить пул</div>
-                <div class="refresh-ping button-material">Обновить пинг</div>
-                <div class="remove-all-pools button-material">Удалить всё</div>
+                <div class="add-new-pool button-material">Add pool</div>
+                <div class="refresh-ping button-material">Refresh ping</div>
+                <div class="remove-all-pools button-material">Remove all</div>
             </div>
         </div>
-        <div class="label center-align" id="settings">- Настройки оборудования -</div>
+        <div class="label center-align" id="settings">- Hardware settings -</div>
         <div class="settings center-align">
             <form>
-                 <span>Алгоритм:</span>
+                <span>Algo:</span>
                 <select class="settings__algo">
                     <option data-algo="scrypt">Scrypt (Zeus)</option>
                     <option data-algo="sha">Sha256</option>
                 </select>
                 <br>
-                <span>Модель майнера:</span>
+                <span>Miner model:</span>
                 <select class="settings__select settings--scrypt">
                     <option data-chips="6">Blizzard</option>
                     <option data-chips="96">Cyclone</option>
@@ -90,36 +90,36 @@
                     <option data-chips="128">Thunder X3</option>
                 </select>
                 <br>
-                <span>Кол-во чипов:</span>
+                <span>Chips count:</span>
                 <input class="settings__chips settings--scrypt" type="text" name="zeus-chips">
                 <br>
-                <span>Рабочая частота:</span>
+                <span>Frequency:</span>
                 <input class="settings__clock settings--scrypt" type="text" name="zeus-clock" value="328">
                 <br>
                 <div class="button-panel">
-                    <div class="button-material save-conf-btn">Применить настройки</div>
+                    <div class="button-material save-conf-btn">Save and restart</div>
                 </div>
             </form>
         </div>
-        <footer class="center-align">Zeusminer dashboard by <a href="http://github.com/euhex">&nbsp;@Euhex</a>
+        <footer class="center-align">ZeusPi mining dashboard by <a href="http://github.com/euhex">&nbsp;@Euhex</a>
         </footer>
     </main>
 
     <div id="edit-modal" class="settings" style="display:none;">
          <form>
-                <span>URL пула:</span>
+                <span>Pool URL:</span>
                 <input class="edit-modal__url" type="text" name="url">
                 <br>
-                <span>Логин:</span>
+                <span>Username:</span>
                 <input class="edit-modal__login" type="text" name="login">
                 <br>
-                <span>Пароль:</span>
+                <span>Password:</span>
                 <input class="edit-modal__password" type="text" name="password">
                 <br>
                 <div class="button-panel">
-                    <div class="button-material edit-modal__save">Сохранить</div>
-                    <div class="button-material edit-modal__cancel">Отмена</div>
-                    <div class="button-material edit-modal__delete">Удалить</div>
+                    <div class="button-material edit-modal__save">Save</div>
+                    <div class="button-material edit-modal__cancel">Cancel</div>
+                    <div class="button-material edit-modal__delete">Remove</div>
                 </div>
             </form>
     </div>
