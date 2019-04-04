@@ -1,5 +1,6 @@
 # ZeusPi-mining-dashboard
 Mining dashboard for RaspberryPi with bfgminer fork for scrypt ZeusMiners.
+[![Known Vulnerabilities](https://snyk.io/test/github/metavoid/ZeusPi-mining-dashboard/badge.svg)](https://snyk.io/test/github/metavoid/ZeusPi-mining-dashboard)
 
 <h2>How to use it?</h2>
 
